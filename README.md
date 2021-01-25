@@ -1,6 +1,6 @@
 ## Live Demo
 
-![Live Demo](https://600f4a0033dced0b80732d0e--amazing-wright-b242fb.netlify.app/)
+[Live Demo](https://600f4a0033dced0b80732d0e--amazing-wright-b242fb.netlify.app/)
 
 
 # Getting Started with Create React App

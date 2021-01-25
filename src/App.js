@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { ChromePicker } from "react-color";
+import React, { useState, useEffect} from "react";
+import { initSocket, disconnectSocket, recieveColor, sendColor } from './socketServices';
 
 function App() {
+  const [color, setColor] = useState("darkcyan");
+  const [hidden, setHidden] = useState(false);
+  
+  useEffect(() => {
+    initSocket();
+    recieveColor(color => { 
+      console.log("Reactin içinde:" , color);
+      setColor(color);
+    })
+    return () => disconnectSocket();
+  }, []);
+  useEffect(() => {
+    sendColor(color);
+    console.log(color);
+  }, [color]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ background: color }} className="App">
+      {hidden && (
+        <ChromePicker
+          className="picker"
+          color={color}
+          onChange={(uptatedColor) => setColor(uptatedColor.hex)}
+        />
+      )}
+      <button className="button" onClick={() => setHidden(!hidden)}>
+        {hidden ? "Renk Paletini Kapat" : "Renk Seçimi Yap"}
+      </button>
     </div>
   );
 }
